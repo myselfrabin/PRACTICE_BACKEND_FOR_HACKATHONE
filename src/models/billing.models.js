@@ -47,8 +47,6 @@ paid_on:{
     default: Date.now,
     required: true
 }
-
-
 },
 {timestamps: true}
 )
