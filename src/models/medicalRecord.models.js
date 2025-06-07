@@ -13,7 +13,7 @@
 */
 
 import mongoose, {Schema} from "mongoose";
-
+import mongooseAggregatePpaginate from 'mongoose-aggregate-paginate-v2';
 const medicalRecordSchema = new (
     {
     // our field is here
@@ -53,6 +53,7 @@ const medicalRecordSchema = new (
 {timestamps: true}
 )
 
+medicalRecordSchema.plugin(mongooseAggregatePpaginate); 
 
 
 export const MedicalRecord = mongoose.model("MedicalRecord",medicalRecordSchema); 
