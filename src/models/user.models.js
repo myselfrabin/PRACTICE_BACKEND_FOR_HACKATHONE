@@ -3,6 +3,7 @@ hospital_user [icon: 🏥] {
     _id string pk
     full_name string
     email string
+    password string
     phone_num int
     gender string
     dob Date
@@ -14,6 +15,7 @@ hospital_user [icon: 🏥] {
 */
 
 import mongoose, {Schema} from "mongoose"
+import bcrypt from "bcrypt"
 
 const userSchema = new Schema (
     {
@@ -32,6 +34,11 @@ const userSchema = new Schema (
         unique: true,
         lowercase: true,
         trim: true
+    },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
     },
     phone_num: {
         type: String,
@@ -58,5 +65,18 @@ const userSchema = new Schema (
 },
 {timestamps: true}
 )
+
+
+userSchema.pre("save", async function name(next) {
+    if(!this.modified("password")) return 
+
+    this.password = bcrypt.hash(this.password,10);
+
+    next()
+})
+
+
+
+
 
 export const User = mongoose.model("User", userSchema);
